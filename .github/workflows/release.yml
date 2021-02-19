@@ -83,7 +83,6 @@ jobs:
       - name: Checkout containerd
         uses: actions/checkout@v2
         with:
-          repository: umezawatakeshi/containerd
           ref: ${{ github.ref }}
           path: src/github.com/containerd/containerd
 
