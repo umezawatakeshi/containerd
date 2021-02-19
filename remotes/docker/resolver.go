@@ -300,7 +300,10 @@ func (r *dockerResolver) Resolve(ctx context.Context, ref string) (string, ocisp
 			resp.Body.Close() // don't care about body contents.
 
 			if resp.StatusCode > 299 {
-				if resp.StatusCode == http.StatusNotFound {
+				if resp.StatusCode > 399 {
+					if resp.StatusCode != http.StatusNotFound {
+						lastErr = errors.Errorf("unexpected status code %v: %v", u, resp.Status)
+					}
 					continue
 				}
 				return "", ocispec.Descriptor{}, errors.Errorf("unexpected status code %v: %v", u, resp.Status)
